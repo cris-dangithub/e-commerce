@@ -26,28 +26,78 @@
             
 
             <div class="navbar__menu f-roboto-500">
-                <a href="#"><ion-icon name="close-outline"></ion-icon></a>
+                <a><ion-icon name="close-outline" class="hideMenu"></ion-icon></a>
                 <a href="#">HOME</a>
                 <a href="#">PRODUCTS</a>
             </div> 
 
             <div class="navbar__rightContent">
                 <div class="rightContent__moodPage iconsContainerRelative">
-                    <a href="#" class='bx bx-moon absolute-CenterItems'><i></i></a> <!-- luna -->
-                    <a href="#" class='bx bx-sun absolute-CenterItems'><i></i></a>   <!-- Sol (Para modo noche) -->
+                    <a class='bx bx-moon absolute-CenterItems'><i></i></a> <!-- luna -->
+                    <a class='bx bx-sun absolute-CenterItems'><i></i></a>   <!-- Sol (Para modo noche) -->
                 </div>
                 <div class="rightContent__shoppingBagIcon iconsContainerRelative">
-                    <a href="#"><i class='bx bx-shopping-bag absolute-CenterItems' ></i></a> <!-- Bolsa de compras -->
+                    <a><i class='bx bx-shopping-bag absolute-CenterItems showCart' ></i></a> <!-- Bolsa de compras -->
                     <div class="shoppingBagIcon__count"></div> <!-- Contador -->
                 </div>
 
-                <a href="#"><i class='bx bx-grid-alt' ></i></a>   <!-- Boton de menú (mobile) -->
+                <a><i class='bx bx-grid-alt' ></i></a>   <!-- Boton de menú (mobile) -->
 
             </div>
 
             
 
-            <div class="navbar__cart"></div> <!-- El contenido de esto con JS -->
+            <div class="navbar__cart">
+                <div class="cart__content">
+                    <h3 class="f-roboto-400">My Cart</h3>
+                    <div class="content__products content__products-withProducts content__products-empty"> 
+                        <!-- ! Vacío-->
+                        
+                        <img class="vacioImg" src="./src/img/empty-cart.png" alt="carritoVacío" style="width: 100%"> 
+                        <div class="content__products-empty__cardEmpty">
+                            <h3 class="f-roboto-500">Your cart is empty</h3>
+                            <p>
+                                You can add items to your cart by clicking on the "+"
+                                button on the product page.
+                            </p> 
+                        </div>
+                        
+                        
+                        <!-- !Con productos -->
+                        <!-- <div class="withProducts__cardShopping">
+                            <img class="cardShopping__itemImg" src="./src/img/featured1.png" alt="rojo">
+                            <div class="cardShopping__description">
+                                <h4 class="f-roboto-500">Sweatshirts</h4>
+                                <p>
+                                    Stock: 20 | <span>$24.00 </span><br>
+                                </p>
+                                
+                                <p>Subtotal: $24.00</p>
+                                
+                                <div class="description__amount">
+                                    <button class="btn_basic"><i class='bx bx-minus'></i></button>
+                                    <p>1 units</p>
+                                    <button class="btn_basic">+</button>
+                                </div>
+                            </div>
+                            <a><i class='bx bx-trash-alt'></i></a>
+                        </div> -->
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    
+                    <div class="content__count">
+                        <p>0 items</p>
+                        <p>$0.00</p>
+                    </div>
+                </div>
+                
+                <a><ion-icon name="close-outline" class="hideMenu"></ion-icon></a>
+
+            </div> <!-- El contenido de esto con JS -->
                 
             
         </nav>

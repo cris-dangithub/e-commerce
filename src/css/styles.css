@@ -111,8 +111,14 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 1rem 1.7rem;
-}
 
+    transition: background-color 0.5s, box-shadow 0.5s;
+}
+.main .main__navbarTransparent {
+    background-color: transparent; /* ? */
+    box-shadow: none;
+
+}
 .main__navbar .navbar__leftContent {
     display: flex;
     gap: 0.6rem;
@@ -153,13 +159,16 @@ body {
     background-color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
 }
 
+.main__navbar .navbar__rightContent > a {
+    cursor: pointer
+}
 .main__navbar .navbar__menu {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     z-index: 1000;
-    background-color: red;/* var(--day-color-bg_main); */ /* ? */
+    background-color: var(--day-color-bg_main); /* ? */
     min-height: 100vh;
     width: 100%;
     padding-top: 7rem;
@@ -172,25 +181,164 @@ body {
     gap: 3.5rem;
 
 
-    transform: translateX(50%); 
+    transform: translateX(100%); 
     transition: transform 0.5s;
 }
-.navbar__menuShow {
+.main__navbar .navbar__menuShow {
     transform: translateX(0); 
     
 }
-.navbar__menu a:nth-child(1){
+.hideMenu{
     position: absolute;
     top: 1rem;
-    right: 1.3rem;
+    right: 1rem;
     font-size: 2rem;
     --ionicon-stroke-width: 64px;
     line-height: 0;
-
 }
 
 .main__navbar .navbar__cart { /* ! */
     position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    width: 100%;
+
+    transform: translateX(100%);
+    transition: transform 0.5s;
+
+    padding: 4rem 2rem 2rem 2rem;
+
+    display: flex;
+}
+
+.navbar__cart .cart__content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cart__content h3 {
+    font-size: 1.4rem;
+    grid-area: title;
+    text-align: center;
+}
+
+
+
+
+/* !Generico */
+.cart__content .content__products { 
+    /* background-color: rebeccapurple; */
+    margin: 2rem 0;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    /* height: 100%; */
+} 
+/* !Vacio */
+.cart__content .content__products-empty { 
+    margin-bottom: 5rem;
+} 
+
+/* */
+
+/* !Con productos */
+.cart__content .content__products-withProducts .withProducts__cardShopping{
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    /* background-color: blue; */
+    padding: 1rem 0;
+}
+
+.content__products-withProducts .cardShopping__itemImg {
+    background-color: #fff;
+    padding: 0.4rem 0rem;
+    width: 4rem;
+    border: 1px solid var(--day-color-bg_card_footer);
+}
+
+.content__products-withProducts .cardShopping__description {
+    color: var(--day-color-txt_home_filter_stockCard-ThirdDarkShade);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+}
+.cardShopping__description h4{
+    color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
+}
+.cardShopping__description p:nth-child(2){
+    font-size: 0.8rem;
+}
+.cardShopping__description p > *{
+    color: var(--day-color-logo-txt_prices-btn_add);
+}
+.cardShopping__description p:nth-child(3){
+    font-size: 0.95rem;
+    color: var(--day-color-logo-txt_prices-btn_add);
+}
+.cardShopping__description .description__amount {
+    display: flex;
+    justify-content: space-between;
+}
+.description__amount button{
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--day-color-bg_card_footer);
+    background-color: #fff;
+    color: var(--day-color-txt_home_filter_stockCard-ThirdDarkShade);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.withProducts__cardShopping a{
+    display: flex;
+    align-self: flex-end;
+    margin-left: 3rem;
+    font-size: 1.2rem;
+    color: var(--day-color-logo-txt_prices-btn_add);
+}
+
+
+
+
+
+/* */
+
+
+
+
+.cart__content .content__count {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.main__navbar .navbar__cartShow {
+    transform: translateX(0);
 }
 
 .main .main__container {
