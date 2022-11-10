@@ -407,6 +407,11 @@ body {
     font-size: 1.1rem;
 }
 
+.home__description > p > *{
+    color: var(--day-color-txt_home_filter_stockCard-ThirdDarkShade);
+    font-size: 0.8rem;
+}
+
 .home__description .description__btn{
     margin-top: 1.5rem;
 
