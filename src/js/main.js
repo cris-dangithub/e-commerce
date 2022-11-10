@@ -117,7 +117,7 @@ function printProducts() {
                     <p>$${price}.00 <span class="stockProduct" id="${id}">| Stock: ${stock}</span></p>
                     <p>${name}</p>
                 </div>
-                <a class="cardStock" id="${id}">+</a>
+                <a class="cardStock pointerCurs" id="${id}">+</a>
             </div>
         `
     })
@@ -159,7 +159,7 @@ container.addEventListener("click", (e) => {
 })
 
 
-
+//* Agregar items al carrito (funTres)
 
 
 

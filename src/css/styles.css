@@ -85,6 +85,9 @@ button {
 .divider:nth-child(4) {
     display: none;
 }
+.pointerCurs {
+    cursor: pointer;
+}
 
 img {
     width: 25px; /* ? */ /* ! */
