@@ -18,11 +18,26 @@ function changeNavBg(){
     navbar.classList.add("main__navbarTransparent") : navbar.classList.remove("main__navbarTransparent")
 }
 
+function printEmptyCart(){
+    html = `
+        <img class="vacioImg" src="./src/img/empty-cart.png" alt="carritoVacío" style="width: 100%"> 
+        <div class="content__products-empty__cardEmpty">
+            <h3 class="f-roboto-500">Your cart is empty</h3>
+            <p>
+                You can add items to your cart by clicking on the "+"
+                button on the product page.
+            </p> 
+        </div>
+    `   
+    cart__contentProducts.innerHTML = html
+}
+
 //! VARIABLES **********************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
 const navbar__shoppingCart = document.querySelector(".navbar__cart")
 const container = document.querySelector(".main__container")
+const cart__contentProducts = document.querySelector(".content__products")
 
 let menuActive = false
 let shoppingCartActive = false
@@ -50,3 +65,8 @@ navbar.addEventListener("click", (e) => {
 
 })
 
+//* PINTAR CARRITO ACTUAL (funcUno)
+
+printEmptyCart()
+
+//* Evento que al darle click a los botones del shop card, disminuyan los stocks
