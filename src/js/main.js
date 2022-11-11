@@ -44,7 +44,8 @@ const products = [
         stock: 10,
         src: "./src/img/featured1.png",
         alt: "redHoodie",
-        filterName: "hoodies"
+        filterName: "hoodies",
+        shopCant: 0
     },
     {
         id: 2,
@@ -53,7 +54,8 @@ const products = [
         stock: 15,
         src: "./src/img/featured2.png",
         alt: "blackShirt",
-        filterName: "shirts"
+        filterName: "shirts",
+        shopCant: 0
     },
     {
         id: 3,
@@ -62,7 +64,8 @@ const products = [
         stock: 20,
         src: "./src/img/featured3.png",
         alt: "whiteSweatshirt",
-        filterName: "sweatshirts"
+        filterName: "sweatshirts",
+        shopCant: 0
     },
     {
         id: 4,
@@ -71,9 +74,12 @@ const products = [
         stock: 10,
         src: "./src/img/home.png",
         alt: "blackSweatshirt",
-        filterName: "sweatshirts"
+        filterName: "sweatshirts",
+        shopCant: 0
     }
 ]
+
+const shoppingCart = []
 //* WINDOW **********************************
 window.addEventListener("scroll", (e) => {
     changeNavBg()
@@ -133,6 +139,7 @@ function reduceStock(idProd) {
     const positionProduct =  products.findIndex(product => product.id === idProd)
     if (products[positionProduct].stock > 0) {
         products[positionProduct].stock -= 1
+        products[positionProduct].shopCant += 1 //aca esta el problema
         printNewStock(idProd)
     }
 }
@@ -146,16 +153,64 @@ function printNewStock(idProd) {
         if(Number(stockSpan.id) === idProd) 
             container__stockProduct[index].textContent = html
     })
-
-
 }
+
+function addToCart__Object(idProd) {
+    let condition = false;
+
+    for (let productShCrt of shoppingCart) {
+        if (productShCrt.id === idProd){
+            condition = true
+            break
+        }
+    }
+    
+    if (!condition) 
+        products.forEach(product => {
+            if (product.id === idProd) {
+                shoppingCart.push(product)
+            }
+        })
+        console.log(shoppingCart)
+}
+
+function addToCart__Display() {
+    html = ``
+    shoppingCart.forEach(({id, name, price, stock, src, alt, filterName, shopCant}) => {
+        html += `
+        <div class="withProducts__cardShopping">
+            <img class="cardShopping__itemImg" src=${src} alt=${alt}>
+            <div class="cardShopping__description">
+                <h4 class="f-roboto-500">${name}</h4>
+                <p>
+                    Stock: ${stock} | <span>$${price}.00 </span><br>
+                </p>
+                <p>Subtotal: $${price * shopCant}.00</p>
+                <div class="description__amount">
+                    <button class="btn_basic"><i class='bx bx-minus'></i></button>
+                    <p>${shopCant} units</p>
+                    <button class="btn_basic">+</button>
+                </div>
+            </div>
+            <a><i class='bx bx-trash-alt'></i></a>
+        </div>
+        `
+    })
+    cart__contentProducts.classList.add("content__products-withProducts")
+    cart__contentProducts.innerHTML = html
+    
+}
+
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
-    if (e.target.classList.contains("cardStock")) reduceStock(idProduct)
-    if (e.target.classList.contains("btn-add")) reduceStock(idProduct)
-    
-    
+    if (e.target.classList.contains("cardStock") || e.target.classList.contains("btn-add")) {
+        reduceStock(idProduct)
+        addToCart__Object(idProduct)
+        addToCart__Display()
+
+    } 
+
 })
 
 
