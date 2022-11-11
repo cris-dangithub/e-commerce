@@ -90,6 +90,10 @@ button {
     cursor: pointer;
 }
 
+.bx-sun {
+    visibility: hidden;
+}
+
 img {
     width: 25px; /* ? */ /* ! */
 }

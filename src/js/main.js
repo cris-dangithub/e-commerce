@@ -263,8 +263,6 @@ navbar.addEventListener("click", (e) => {
         countTotal()
         if (shoppingCart.length === 0) printEmptyCart()
     }
-    console.log(e.target)
-    console.log(statusButtonCheck)
     if (statusButtonCheck && e.target.classList.contains("btn-checked"))
         alert("Seguro que quieres comprar estos productos?")
 
@@ -308,8 +306,6 @@ function printCountTotal(price, item, statusButton) {
     navbar__cartCount.innerHTML = html;
     
     (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
-    console.log(statusButtonCheck);
-    console.log(price);
 }
 
 container.addEventListener("click", (e) => {
