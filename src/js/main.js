@@ -24,6 +24,68 @@ function printEmptyCart(){
     cart__contentProducts.innerHTML = html
 }
 
+function printNumberIconNav(length) {
+    navbar__iconShCrt.textContent = length
+}
+
+function reduceStock(idProd) {
+    const positionProduct =  products.findIndex(product => product.id === idProd)
+    if (products[positionProduct].stock > 0) {
+        products[positionProduct].stock -= 1
+        products[positionProduct].shopCant += 1 //aca esta el problema
+        printNewStock(idProd)
+    }
+}
+
+function printNewStock(idProd) {
+    let html = ``
+    container__stockProduct.forEach((stockSpan, index) => {
+        html = `| Stock: ${products[stockSpan.id - 1].stock}`
+        if(Number(stockSpan.id) === idProd) 
+            container__stockProduct[index].textContent = html
+    })
+}
+
+function addToCart__Object(idProd) {
+    let condition = false;
+    for (let productShCrt of shoppingCart) {
+        if (productShCrt.id === idProd){
+            condition = true
+            break
+        }
+    }
+    if (!condition) 
+        products.forEach(product => {
+            if (product.id === idProd) shoppingCart.push(product)
+        })
+}
+
+function addToCart__Display() {
+    html = ``
+    shoppingCart.forEach(({id, name, price, stock, src, alt, shopCant}) => {
+        html += `
+        <div class="withProducts__cardShopping">
+            <img class="cardShopping__itemImg" src=${src} alt=${alt}>
+            <div class="cardShopping__description">
+                <h4 class="f-roboto-500">${name}</h4>
+                <p>
+                    Stock: ${stock} | <span>$${price}.00 </span><br>
+                </p>
+                <p>Subtotal: $${price * shopCant}.00</p>
+                <div class="description__amount">
+                    <button class="btn_basic"><i class='bx bx-minus'></i></button>
+                    <p>${shopCant} units</p>
+                    <button class="btn_basic btn_basic-Plus" id="${id}">+</button>
+                </div>
+            </div>
+            <a><i class='bx bx-trash-alt'></i></a>
+        </div>
+        `
+    })
+    cart__contentProducts.classList.add("content__products-withProducts")
+    cart__contentProducts.innerHTML = html
+    
+}
 //! VARIABLES **********************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
@@ -80,7 +142,7 @@ const products = [
     }
 ]
 const shoppingCart = []
-//* WINDOW **********************************
+//* WINDOW **************************************************************************************************************
 window.addEventListener("scroll", (e) => {
     changeNavBg()
 })
@@ -101,6 +163,11 @@ navbar.addEventListener("click", (e) => {
     if (e.target.classList.contains("showCart") || e.target.classList.contains("shoppingBagIcon__count"))
         shoppingCartActive = actionRightMenus(!shoppingCartActive , "navbar__cartShow", navbar__shoppingCart)
 
+    if (e.target.classList.contains("btn_basic-Plus")) {
+        idProduct = Number(e.target.id)
+        reduceStock(idProduct)
+        addToCart__Display()
+    }
 })
 
 //* PINTAR CARRITO ACTUAL (funcUno)
@@ -131,71 +198,11 @@ function printProducts() {
 
 }
 
-function printNumberIconNav(length) {
-    navbar__iconShCrt.textContent = length
-}
+
 
 printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
 printNumberIconNav(shoppingCart.length)
 const container__stockProduct = document.querySelectorAll(".stockProduct")
-
-function reduceStock(idProd) {
-    const positionProduct =  products.findIndex(product => product.id === idProd)
-    if (products[positionProduct].stock > 0) {
-        products[positionProduct].stock -= 1
-        products[positionProduct].shopCant += 1 //aca esta el problema
-        printNewStock(idProd)
-    }
-}
-function printNewStock(idProd) {
-    let html = ``
-    container__stockProduct.forEach((stockSpan, index) => {
-        html = `| Stock: ${products[stockSpan.id - 1].stock}`
-        if(Number(stockSpan.id) === idProd) 
-            container__stockProduct[index].textContent = html
-    })
-}
-
-function addToCart__Object(idProd) {
-    let condition = false;
-    for (let productShCrt of shoppingCart) {
-        if (productShCrt.id === idProd){
-            condition = true
-            break
-        }
-    }
-    if (!condition) 
-        products.forEach(product => {
-            if (product.id === idProd) shoppingCart.push(product)
-        })
-}
-
-function addToCart__Display() {
-    html = ``
-    shoppingCart.forEach(({id, name, price, stock, src, alt, filterName, shopCant}) => {
-        html += `
-        <div class="withProducts__cardShopping">
-            <img class="cardShopping__itemImg" src=${src} alt=${alt}>
-            <div class="cardShopping__description">
-                <h4 class="f-roboto-500">${name}</h4>
-                <p>
-                    Stock: ${stock} | <span>$${price}.00 </span><br>
-                </p>
-                <p>Subtotal: $${price * shopCant}.00</p>
-                <div class="description__amount">
-                    <button class="btn_basic"><i class='bx bx-minus'></i></button>
-                    <p>${shopCant} units</p>
-                    <button class="btn_basic">+</button>
-                </div>
-            </div>
-            <a><i class='bx bx-trash-alt'></i></a>
-        </div>
-        `
-    })
-    cart__contentProducts.classList.add("content__products-withProducts")
-    cart__contentProducts.innerHTML = html
-    
-}
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
@@ -211,9 +218,10 @@ container.addEventListener("click", (e) => {
 
 
 //* Agregar items al carrito (funTres)
+
 // * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
 
-
+// * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
 
 
 
