@@ -28,6 +28,7 @@ function printEmptyCart(){
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
 const navbar__shoppingCart = document.querySelector(".navbar__cart")
+const navbar__iconShCrt = document.querySelector(".shoppingBagIcon__count")
 const cart__contentProducts = document.querySelector(".content__products")
 const container = document.querySelector(".main__container")
 const container__shopProducts = document.querySelector(".shop__products")
@@ -78,7 +79,6 @@ const products = [
         shopCant: 0
     }
 ]
-
 const shoppingCart = []
 //* WINDOW **********************************
 window.addEventListener("scroll", (e) => {
@@ -131,9 +131,13 @@ function printProducts() {
 
 }
 
-printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
-const container__stockProduct = document.querySelectorAll(".stockProduct")
+function printNumberIconNav(length) {
+    navbar__iconShCrt.textContent = length
+}
 
+printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
+printNumberIconNav(shoppingCart.length)
+const container__stockProduct = document.querySelectorAll(".stockProduct")
 
 function reduceStock(idProd) {
     const positionProduct =  products.findIndex(product => product.id === idProd)
@@ -164,7 +168,6 @@ function addToCart__Object(idProd) {
         products.forEach(product => {
             if (product.id === idProd) shoppingCart.push(product)
         })
-
 }
 
 function addToCart__Display() {
@@ -194,13 +197,13 @@ function addToCart__Display() {
     
 }
 
-
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
     if (e.target.classList.contains("cardStock") || e.target.classList.contains("btn-add")) {
         reduceStock(idProduct)
         addToCart__Object(idProduct)
         addToCart__Display()
+        printNumberIconNav(shoppingCart.length)
 
     } 
 
@@ -208,7 +211,7 @@ container.addEventListener("click", (e) => {
 
 
 //* Agregar items al carrito (funTres)
-
+// * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
 
 
 

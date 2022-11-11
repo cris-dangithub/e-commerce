@@ -160,6 +160,12 @@ body {
     height: 0.9rem;
     border-radius: 50%;
     background-color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    color: #fff;
 }
 
 .main__navbar .navbar__rightContent > a {
