@@ -167,11 +167,9 @@ function addToCart__Object(idProd) {
     
     if (!condition) 
         products.forEach(product => {
-            if (product.id === idProd) {
-                shoppingCart.push(product)
-            }
+            if (product.id === idProd) shoppingCart.push(product)
         })
-        console.log(shoppingCart)
+
 }
 
 function addToCart__Display() {
