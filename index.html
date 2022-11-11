@@ -18,8 +18,8 @@
                 </a>
                 <p class="textNav f-roboto-700">STORE</p>
                 <div class="navbar__menuDesktop f-roboto-500 ">
-                    <a href="#">Home</a>
-                    <a href="#">Products</a>
+                    <a href="#HOME">Home</a>
+                    <a href="#PRODUCTS">Products</a>
                 </div>
             </div>
 
@@ -27,8 +27,8 @@
 
             <div class="navbar__menu f-roboto-500">
                 <a><ion-icon name="close-outline" class="hideMenu"></ion-icon></a>
-                <a href="#">HOME</a>
-                <a href="#">PRODUCTS</a>
+                <a href="#HOME">HOME</a>
+                <a href="#PRODUCTS">PRODUCTS</a>
             </div> 
 
             <div class="navbar__rightContent">
@@ -107,7 +107,7 @@
             
         </nav>
 
-        <main class="main__container">
+        <main class="main__container" id="HOME">
             <section class="container__home">
                 <div class="home__product">
                     <img src="./src/img/home.png" alt="homeImage">
@@ -129,7 +129,7 @@
                 </div>
             </section>
 
-            <section class="container__shop">
+            <section class="container__shop" id="PRODUCTS">
                 <div class="shop__filter">
                     <button class="btn_basic f-roboto-500" data-filter="all">
                         Show all <br>

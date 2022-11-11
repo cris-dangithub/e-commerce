@@ -225,6 +225,8 @@ body {
     padding: 4rem 2rem 2rem 2rem;
 
     display: flex;
+    max-width: 450px;
+
 }
 
 .navbar__cart .cart__content{
@@ -449,6 +451,11 @@ body {
     padding: 0.8rem 1.4rem;
     color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
     font-size: 1rem;
+    transition: background-color 0.4s, color 0.4s;
+}
+.btn-discover:hover{
+    background-color: rgb(161, 161, 161);
+    color: var(--day-color-bg_nav-btn_txtAddHome);
 }
 
 .btn-add {
@@ -456,6 +463,10 @@ body {
     padding: 1.2rem 1.8rem;
     color: var(--day-color-bg_nav-btn_txtAddHome);
     font-size: 1rem;
+}
+.btn-add:hover {
+    background-color: var(--day-color-logo-txt_prices-btn_add);
+    transition: background-color 0.4s, color 0.4s;
 }
 
 .main__container .container__shop {
@@ -507,6 +518,7 @@ body {
     overflow: hidden;
 
     position: relative;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
     /* margin-top: 2rem; */
 }
 
@@ -538,6 +550,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.4s, color 0.4s;
+}
+.products__card a:hover {
+
+    background-color:var(--day-color-logo-txt_prices-btn_add);
+    color:  var(--day-color-bg_nav-btn_txtAddHome);
 }
 
 .products__card .card__description{
