@@ -144,9 +144,6 @@ function reduceStock(idProd) {
     }
 }
 function printNewStock(idProd) {
-/*     products.forEach(product => {
-        if(container__stockProduct.id === idProd) return container__stockProduct.textContent = 
-    }) */
     let html = ``
     container__stockProduct.forEach((stockSpan, index) => {
         html = `| Stock: ${products[stockSpan.id - 1].stock}`
@@ -157,14 +154,12 @@ function printNewStock(idProd) {
 
 function addToCart__Object(idProd) {
     let condition = false;
-
     for (let productShCrt of shoppingCart) {
         if (productShCrt.id === idProd){
             condition = true
             break
         }
     }
-    
     if (!condition) 
         products.forEach(product => {
             if (product.id === idProd) shoppingCart.push(product)
