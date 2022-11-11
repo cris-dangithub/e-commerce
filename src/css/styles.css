@@ -26,7 +26,17 @@
 html {
     scroll-behavior: smooth;
 }
-
+body {
+    overflow-x: hidden;
+}
+body::-webkit-scrollbar {
+    width: 4px;
+    background-color: var(--day-color-btn__discoverHome);
+}
+body::-webkit-scrollbar-thumb { /* Para estilar el */
+    background-color: var(--day-color-bg_btnAddHome-SecondDarkShade);
+    border-radius: 10px;
+}
 * {
     margin: 0;
     padding: 0;
@@ -249,11 +259,25 @@ body {
 .cart__content .content__products { 
     /* background-color: rebeccapurple; */
     margin: 2rem 0;
-    overflow: scroll;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     /* height: 100%; */
-} 
+}
+
+.content__products {
+    overflow-x: hidden;
+}
+.content__products::-webkit-scrollbar {
+    width: 4px;
+    background-color: var(--day-color-btn__discoverHome);
+}
+.content__products::-webkit-scrollbar-thumb { /* Para estilar el */
+    background-color: var(--day-color-bg_btnAddHome-SecondDarkShade);
+    border-radius: 10px;
+}
+
+
 /* !Vacio */
 .cart__content .content__products-empty { 
     margin-bottom: 5rem;
