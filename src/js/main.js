@@ -266,7 +266,6 @@ navbar.addEventListener("click", (e) => {
     console.log(e.target)
     console.log(statusButtonCheck)
     if (statusButtonCheck && e.target.classList.contains("btn-checked"))
-         
         alert("Seguro que quieres comprar estos productos?")
 
 })
@@ -307,8 +306,10 @@ function printCountTotal(price, item, statusButton) {
     </div>
     <button class="btn_basic btn-checked" ${statusButton}><i class='bx bxs-check-shield'></i> Checkout</button>`
     navbar__cartCount.innerHTML = html;
-    (!statusButtonCheck && (statusButton === "")) ? statusButtonCheck = true : statusButtonCheck = false;
-
+    
+    (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
+    console.log(statusButtonCheck);
+    console.log(price);
 }
 
 container.addEventListener("click", (e) => {
