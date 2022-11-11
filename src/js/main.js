@@ -106,14 +106,70 @@ function addToCart__Display() { //!checked
         `
     })
     cart__contentProducts.classList.add("content__products-withProducts")
-    cart__contentProducts.innerHTML = html
+    cart__contentProducts.innerHTML = html 
     
+}
+
+function aumentStock(idProd) {
+    console.log("En aumentStock inicos", shoppingCart[0].shopCant)
+
+    const positionProduct =  products.findIndex(product => product.id === idProd)
+    if (products[positionProduct].shopCant > 0) {
+        products[positionProduct].stock += 1
+        console.log(products === shoppingCart)
+        console.log(products)
+        console.log(shoppingCart)
+
+        products[positionProduct].shopCant -= 1 //aca esta el problema
+        console.log(shoppingCart[0].shopCant)
+        printNewStock(idProd)
+    } 
+    console.log("En aumentStock", shoppingCart[0].shopCant)
+}
+
+function reduceInCart__Object(idProd) {
+    console.log(shoppingCart)
+    console.log(shoppingCart[0].shopCant)
+    for (let i = 0; i < shoppingCart.length; i++) {
+        
+        if (shoppingCart[i].id === idProd) {
+            
+                if (shoppingCart[i].shopCant > 1){
+                shoppingCart[i].stock += 1
+                shoppingCart[i].shopCant -= 1
+            } else {
+                shoppingCart.splice(i, 1)
+            }
+            break
+        } 
+    }
+}
+function printProducts() {
+    let html = ``
+
+    products.forEach(({id, name, price, stock, src, alt, filterName}) => {
+        html += `
+            <div class="mix products__card ${filterName}">
+                <div class="card__image">
+                    <img src=${src} alt=${alt}>
+                </div>
+                <div class="card__description">
+                    <p>$${price}.00 <span class="stockProduct" id="${id}">| Stock: ${stock}</span></p>
+                    <p>${name}</p>
+                </div>
+                <a class="cardStock pointerCurs" id="${id}">+</a>
+            </div>
+        `
+    })
+    container__shopProducts.innerHTML = html
+
 }
 //! VARIABLES **********************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
 const navbar__shoppingCart = document.querySelector(".navbar__cart")
 const navbar__iconShCrt = document.querySelector(".shoppingBagIcon__count")
+const navbar__cartCount = document.querySelector(".content__count")
 const cart__contentProducts = document.querySelector(".content__products")
 const container = document.querySelector(".main__container")
 const container__shopProducts = document.querySelector(".shop__products")
@@ -121,7 +177,7 @@ const container__shopProducts = document.querySelector(".shop__products")
 let menuActive = false
 let shoppingCartActive = false
 let idProduct = null
-
+let statusButtonCheck = false
 const products = [
     {
         id: 1,
@@ -177,40 +233,7 @@ window.addEventListener("load", (e) => {
 //* NAVBAR **********************************
 
 
-function aumentStock(idProd) {
-    console.log("En aumentStock inicos", shoppingCart[0].shopCant)
 
-    const positionProduct =  products.findIndex(product => product.id === idProd)
-    if (products[positionProduct].shopCant > 1) {
-        products[positionProduct].stock += 1
-        console.log(products === shoppingCart)
-        console.log(products)
-        console.log(shoppingCart)
-
-        products[positionProduct].shopCant -= 1 //aca esta el problema
-        console.log(shoppingCart[0].shopCant)
-        printNewStock(idProd)
-    } 
-    console.log("En aumentStock", shoppingCart[0].shopCant)
-}
-
-function reduceInCart__Object(idProd) {
-    console.log(shoppingCart)
-    console.log(shoppingCart[0].shopCant)
-    for (let i = 0; i < shoppingCart.length; i++) {
-        
-        if (shoppingCart[i].id === idProd) {
-            
-                if (shoppingCart[i].shopCant > 1){
-                shoppingCart[i].stock += 1
-                shoppingCart[i].shopCant -= 1
-            } else {
-                shoppingCart.splice(i, 1)
-            }
-            break
-        } 
-    }
-}
 
 navbar.addEventListener("click", (e) => {
     if (e.target.classList.contains("bx-grid-alt")) 
@@ -228,6 +251,7 @@ navbar.addEventListener("click", (e) => {
         reduceStock(idProduct)
         addToCart__Object(idProduct)
         addToCart__Display()
+        countTotal()
     }
 
     if (e.target.classList.contains("btn_basic-Reduce")) {
@@ -236,44 +260,56 @@ navbar.addEventListener("click", (e) => {
         reduceInCart__Object(idProduct)
         addToCart__Display()
         printNumberIconNav(shoppingCart.length)
+        countTotal()
         if (shoppingCart.length === 0) printEmptyCart()
     }
+    console.log(e.target)
+    console.log(statusButtonCheck)
+    if (statusButtonCheck && e.target.classList.contains("btn-checked"))
+         
+        alert("Seguro que quieres comprar estos productos?")
 
 })
 
 //* PINTAR CARRITO ACTUAL (funcUno)
 
 printEmptyCart()
-
+countTotal()
 //* Evento que al darle click a los botones del shop card, disminuyan los stocks (funDos)
 //* CONTAINER **********************************
 // Primero, pintaré las cartas desde la base de datos!!
-function printProducts() {
-    let html = ``
 
-    products.forEach(({id, name, price, stock, src, alt, filterName}) => {
-        html += `
-            <div class="mix products__card ${filterName}">
-                <div class="card__image">
-                    <img src=${src} alt=${alt}>
-                </div>
-                <div class="card__description">
-                    <p>$${price}.00 <span class="stockProduct" id="${id}">| Stock: ${stock}</span></p>
-                    <p>${name}</p>
-                </div>
-                <a class="cardStock pointerCurs" id="${id}">+</a>
-            </div>
-        `
-    })
-    container__shopProducts.innerHTML = html
-
-}
 
 
 
 printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
 printNumberIconNav(shoppingCart.length)
 const container__stockProduct = document.querySelectorAll(".stockProduct")
+
+function countTotal(){
+    let countPrice = 0;
+    let countItems = 0;
+    const strngButton = ' disabled="" '
+    for (let productShCrt of shoppingCart) {
+        countPrice += (productShCrt.shopCant * productShCrt.price)
+        countItems += productShCrt.shopCant
+    }
+    
+    if (!(countPrice === 0)) printCountTotal(countPrice, countItems, "")
+    if ((countPrice === 0)) printCountTotal(countPrice, countItems, strngButton)
+    
+}
+function printCountTotal(price, item, statusButton) {
+    html = `
+    <div class="count__numbers">
+        <p>${item} items</p>
+        <p>$${price}.00</p>
+    </div>
+    <button class="btn_basic btn-checked" ${statusButton}><i class='bx bxs-check-shield'></i> Checkout</button>`
+    navbar__cartCount.innerHTML = html;
+    (!statusButtonCheck && (statusButton === "")) ? statusButtonCheck = true : statusButtonCheck = false;
+
+}
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
@@ -282,6 +318,7 @@ container.addEventListener("click", (e) => {
         addToCart__Object(idProduct)
         addToCart__Display()
         printNumberIconNav(shoppingCart.length)
+        countTotal()
 
     } 
 
@@ -296,7 +333,7 @@ container.addEventListener("click", (e) => {
 
 // * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
 
-
+// * Eventos del carrito: Sumatoria de totales y colocar el boton de comprar con alerta
 
 
 
