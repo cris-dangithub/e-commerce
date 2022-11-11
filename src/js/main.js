@@ -28,11 +28,12 @@ function printNumberIconNav(length) {
     navbar__iconShCrt.textContent = length
 }
 
-function reduceStock(idProd) {
+function reduceStock(idProd) { //! Checked
+    console.log("entraPLUSSSSSSS")
     const positionProduct =  products.findIndex(product => product.id === idProd)
     if (products[positionProduct].stock > 0) {
         products[positionProduct].stock -= 1
-        products[positionProduct].shopCant += 1 //aca esta el problema
+        products[positionProduct].shopCant += 1 
         printNewStock(idProd)
     }
 }
@@ -46,7 +47,9 @@ function printNewStock(idProd) {
     })
 }
 
-function addToCart__Object(idProd) {
+function addToCart__Object(idProd) { //! checked
+    console.log("esto")
+
     let condition = false;
     for (let productShCrt of shoppingCart) {
         if (productShCrt.id === idProd){
@@ -55,12 +58,30 @@ function addToCart__Object(idProd) {
         }
     }
     if (!condition) 
-        products.forEach(product => {
+        for (let product of products) {
+            if (product.id === idProd) {
+                console.log("hola")
+                shoppingCart.push({...product})
+                console.log("shoppingCart")
+                break
+            }
+        } else {
+            const posProduct = shoppingCart.findIndex(productShCrt => productShCrt.id === idProd)
+            if (shoppingCart[posProduct].stock > 0) {
+                shoppingCart[posProduct].stock -= 1
+                shoppingCart[posProduct].shopCant += 1 
+            }
+        }
+
+
+
+       /*  products.forEach(product => {
             if (product.id === idProd) shoppingCart.push(product)
-        })
+            console.log(shoppingCart)
+        }) */
 }
 
-function addToCart__Display() {
+function addToCart__Display() { //!checked
     html = ``
     shoppingCart.forEach(({id, name, price, stock, src, alt, shopCant}) => {
         html += `
@@ -73,7 +94,9 @@ function addToCart__Display() {
                 </p>
                 <p>Subtotal: $${price * shopCant}.00</p>
                 <div class="description__amount">
-                    <button class="btn_basic"><i class='bx bx-minus'></i></button>
+                    <button class="btn_basic btn_basic-Reduce" id="${id}">
+                        <i class='bx bx-minus btn_basic-Reduce' id="${id}"></i>
+                    </button>
                     <p>${shopCant} units</p>
                     <button class="btn_basic btn_basic-Plus" id="${id}">+</button>
                 </div>
@@ -152,6 +175,43 @@ window.addEventListener("load", (e) => {
 })
 
 //* NAVBAR **********************************
+
+
+function aumentStock(idProd) {
+    console.log("En aumentStock inicos", shoppingCart[0].shopCant)
+
+    const positionProduct =  products.findIndex(product => product.id === idProd)
+    if (products[positionProduct].shopCant > 1) {
+        products[positionProduct].stock += 1
+        console.log(products === shoppingCart)
+        console.log(products)
+        console.log(shoppingCart)
+
+        products[positionProduct].shopCant -= 1 //aca esta el problema
+        console.log(shoppingCart[0].shopCant)
+        printNewStock(idProd)
+    } 
+    console.log("En aumentStock", shoppingCart[0].shopCant)
+}
+
+function reduceInCart__Object(idProd) {
+    console.log(shoppingCart)
+    console.log(shoppingCart[0].shopCant)
+    for (let i = 0; i < shoppingCart.length; i++) {
+        
+        if (shoppingCart[i].id === idProd) {
+            
+                if (shoppingCart[i].shopCant > 1){
+                shoppingCart[i].stock += 1
+                shoppingCart[i].shopCant -= 1
+            } else {
+                shoppingCart.splice(i, 1)
+            }
+            break
+        } 
+    }
+}
+
 navbar.addEventListener("click", (e) => {
     if (e.target.classList.contains("bx-grid-alt")) 
         menuActive = actionRightMenus(!menuActive , "navbar__menuShow", navbar__menu)
@@ -166,8 +226,19 @@ navbar.addEventListener("click", (e) => {
     if (e.target.classList.contains("btn_basic-Plus")) {
         idProduct = Number(e.target.id)
         reduceStock(idProduct)
+        addToCart__Object(idProduct)
         addToCart__Display()
     }
+
+    if (e.target.classList.contains("btn_basic-Reduce")) {
+        idProduct = Number(e.target.id)
+        aumentStock(idProduct)
+        reduceInCart__Object(idProduct)
+        addToCart__Display()
+        printNumberIconNav(shoppingCart.length)
+        if (shoppingCart.length === 0) printEmptyCart()
+    }
+
 })
 
 //* PINTAR CARRITO ACTUAL (funcUno)
@@ -223,6 +294,7 @@ container.addEventListener("click", (e) => {
 
 // * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
 
+// * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
 
 
 
