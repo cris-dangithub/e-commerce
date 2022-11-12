@@ -1,4 +1,16 @@
 
+{
+//* Agregar items al carrito (funTres)
+
+// * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
+
+// * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
+
+// * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
+
+// * Eventos del carrito: Sumatoria de totales y colocar el boton de comprar con alerta
+}
+
 // *****************************************************************************************************
 //! FUNCIONES **********************************
 function actionRightMenus(condition, classEnter, currentHTML) {
@@ -190,7 +202,31 @@ function printCountTotal(price, item, statusButton) {
     (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
 }
 
-//! VARIABLES **********************************
+function deletAllitem(idProd) {
+    // eliminar del objeto
+    for (let i = 0; i < shoppingCart.length; i++) 
+        if (shoppingCart[i].id === idProd) shoppingCart.splice(i, 1)
+    
+    // aumentar todo el stock del objeto (products)
+    for (let product of products) {
+        if (product.id === idProd) {
+            product.stock += product.shopCant
+            product.shopCant = 0
+            console.log("aca" ,product);
+            break
+        }
+    }
+
+    //actualizar icono de la cantidad del carrito de compras
+    printNumberIconNav(shoppingCart.length)
+
+    // validar pintar el carrito o la lista
+    shoppingCart.length === 0 ? printEmptyCart() : addToCart__Display()
+
+    printNewStock(idProd)
+}
+
+//! VARIABLES ******************************************************************************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
 const navbar__shoppingCart = document.querySelector(".navbar__cart")
@@ -204,6 +240,7 @@ let menuActive = false
 let shoppingCartActive = false
 let idProduct = null
 let statusButtonCheck = false
+
 const products = [
     {
         id: 1,
@@ -247,7 +284,8 @@ const products = [
     }
 ]
 const shoppingCart = []
-//* WINDOW **************************************************************************************************************
+
+//* EVENTOS **********************************
 window.addEventListener("scroll", (e) => {
     changeNavBg()
 })
@@ -255,11 +293,6 @@ window.addEventListener("scroll", (e) => {
 window.addEventListener("load", (e) => {
     changeNavBg()
 })
-
-//* NAVBAR **********************************
-
-
-
 
 navbar.addEventListener("click", (e) => {
     if (e.target.classList.contains("bx-grid-alt")) 
@@ -289,8 +322,6 @@ navbar.addEventListener("click", (e) => {
         countTotal()
         if (shoppingCart.length === 0) printEmptyCart()
     }
-    if (statusButtonCheck && e.target.classList.contains("btn-checked"))
-        alert("Seguro que quieres comprar estos productos?")
 
     if (e.target.classList.contains("bx-trash-alt")) {
         idProduct = Number(e.target.id)
@@ -298,46 +329,33 @@ navbar.addEventListener("click", (e) => {
         countTotal()
         
     }
-})
-function deletAllitem(idProd) {
-    // eliminar del objeto
-    for (let i = 0; i < shoppingCart.length; i++) 
-        if (shoppingCart[i].id === idProd) shoppingCart.splice(i, 1)
-    
-    // aumentar todo el stock del objeto (products)
-    for (let product of products) {
-        if (product.id === idProd) {
-            product.stock += product.shopCant
-            product.shopCant = 0
-            console.log("aca" ,product);
-            break
-        }
+
+    if (e.target.classList.contains("btn-checked")) {
+        const amountProductsToBuy = shoppingCart.length
+        const singularConfirm = () => confirm(`¿Deseas comprar este producto?`)
+        const pluralConfirm = () => confirm(`¿Deseas comprar estos ${amountProductsToBuy} productos?`)
+        const decision = (amountProductsToBuy > 1 ) ? pluralConfirm() : singularConfirm()
+        removeStock(decision)
     }
 
-    //actualizar icono de la cantidad del carrito de compras
-    printNumberIconNav(shoppingCart.length)
+})
 
-    // validar pintar el carrito o la lista
-    shoppingCart.length === 0 ? printEmptyCart() : addToCart__Display()
-
-    printNewStock(idProd)
+function removeStock(des) {
+    if (des) {
+        shoppingCart.forEach((productShCrt) => {
+            for (let product of products) 
+                if (product.id === productShCrt.id) {
+                    product.shopCant = 0
+                    break
+                }
+            
+        })
+        shoppingCart.length = 0
+        printNumberIconNav(shoppingCart.length)
+        printEmptyCart()
+        countTotal()
+    }
 }
-
-//* PINTAR CARRITO ACTUAL (funcUno)
-
-printEmptyCart()
-countTotal()
-//* Evento que al darle click a los botones del shop card, disminuyan los stocks (funDos)
-//* CONTAINER **********************************
-// Primero, pintaré las cartas desde la base de datos!!
-
-
-
-
-printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
-printNumberIconNav(shoppingCart.length)
-const container__stockProduct = document.querySelectorAll(".stockProduct")
-
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
@@ -352,17 +370,14 @@ container.addEventListener("click", (e) => {
 
 })
 
-
-//* Agregar items al carrito (funTres)
-
-// * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
-
-// * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
-
-// * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
-
-// * Eventos del carrito: Sumatoria de totales y colocar el boton de comprar con alerta
-
+//* PINTAR CARRITO ACTUAL (funcUno)
+printEmptyCart()
+countTotal()
+//* CONTAINER **********************************
+// Primero, pintaré las cartas desde la base de datos!!
+printProducts() /* Se tiene que llamar antes de asignar container__stockproduct */
+printNumberIconNav(shoppingCart.length)
+const container__stockProduct = document.querySelectorAll(".stockProduct")
 
 
 

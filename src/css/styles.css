@@ -265,12 +265,9 @@ body {
     /* height: 100%; */
 }
 
-.content__products {
-    overflow-x: hidden;
-}
 .content__products::-webkit-scrollbar {
     width: 4px;
-    background-color: var(--day-color-btn__discoverHome);
+    background-color: transparent;
 }
 .content__products::-webkit-scrollbar-thumb { /* Para estilar el */
     background-color: var(--day-color-bg_btnAddHome-SecondDarkShade);
@@ -308,6 +305,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 9rem;
 
 }
 .cardShopping__description h4{
