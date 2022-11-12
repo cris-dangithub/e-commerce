@@ -344,6 +344,7 @@ body {
     margin-left: 3rem;
     font-size: 1.2rem;
     color: var(--day-color-logo-txt_prices-btn_add);
+    cursor: pointer;
 }
 
 
@@ -469,10 +470,9 @@ body {
     align-items: center;
 }
 
-
 .btn-discover{
     background-color: var(--day-color-btn__discoverHome);
-    padding: 0.8rem 1.4rem;
+    padding: 1.5rem 1.4rem;
     color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
     font-size: 1rem;
     transition: background-color 0.4s, color 0.4s;

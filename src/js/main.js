@@ -101,7 +101,7 @@ function addToCart__Display() { //!checked
                     <button class="btn_basic btn_basic-Plus" id="${id}">+</button>
                 </div>
             </div>
-            <a><i class='bx bx-trash-alt'></i></a>
+            <a><i class='bx bx-trash-alt' id="${id}"></i></a>
         </div>
         `
     })
@@ -164,6 +164,32 @@ function printProducts() {
     container__shopProducts.innerHTML = html
 
 }
+
+function countTotal(){
+    let countPrice = 0;
+    let countItems = 0;
+    const strngButton = ' disabled="" '
+    for (let productShCrt of shoppingCart) {
+        countPrice += (productShCrt.shopCant * productShCrt.price)
+        countItems += productShCrt.shopCant
+    }
+    
+    if (!(countPrice === 0)) printCountTotal(countPrice, countItems, "")
+    if ((countPrice === 0)) printCountTotal(countPrice, countItems, strngButton)
+    
+}
+function printCountTotal(price, item, statusButton) {
+    html = `
+    <div class="count__numbers">
+        <p>${item} items</p>
+        <p>$${price}.00</p>
+    </div>
+    <button class="btn_basic btn-checked" ${statusButton}><i class='bx bxs-check-shield'></i> Checkout</button>`
+    navbar__cartCount.innerHTML = html;
+    
+    (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
+}
+
 //! VARIABLES **********************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
@@ -266,7 +292,36 @@ navbar.addEventListener("click", (e) => {
     if (statusButtonCheck && e.target.classList.contains("btn-checked"))
         alert("Seguro que quieres comprar estos productos?")
 
+    if (e.target.classList.contains("bx-trash-alt")) {
+        idProduct = Number(e.target.id)
+        deletAllitem(idProduct)
+        countTotal()
+        
+    }
 })
+function deletAllitem(idProd) {
+    // eliminar del objeto
+    for (let i = 0; i < shoppingCart.length; i++) 
+        if (shoppingCart[i].id === idProd) shoppingCart.splice(i, 1)
+    
+    // aumentar todo el stock del objeto (products)
+    for (let product of products) {
+        if (product.id === idProd) {
+            product.stock += product.shopCant
+            product.shopCant = 0
+            console.log("aca" ,product);
+            break
+        }
+    }
+
+    //actualizar icono de la cantidad del carrito de compras
+    printNumberIconNav(shoppingCart.length)
+
+    // validar pintar el carrito o la lista
+    shoppingCart.length === 0 ? printEmptyCart() : addToCart__Display()
+
+    printNewStock(idProd)
+}
 
 //* PINTAR CARRITO ACTUAL (funcUno)
 
@@ -283,30 +338,6 @@ printProducts() /* Se tiene que llamar antes de asignar container__stockproduct 
 printNumberIconNav(shoppingCart.length)
 const container__stockProduct = document.querySelectorAll(".stockProduct")
 
-function countTotal(){
-    let countPrice = 0;
-    let countItems = 0;
-    const strngButton = ' disabled="" '
-    for (let productShCrt of shoppingCart) {
-        countPrice += (productShCrt.shopCant * productShCrt.price)
-        countItems += productShCrt.shopCant
-    }
-    
-    if (!(countPrice === 0)) printCountTotal(countPrice, countItems, "")
-    if ((countPrice === 0)) printCountTotal(countPrice, countItems, strngButton)
-    
-}
-function printCountTotal(price, item, statusButton) {
-    html = `
-    <div class="count__numbers">
-        <p>${item} items</p>
-        <p>$${price}.00</p>
-    </div>
-    <button class="btn_basic btn-checked" ${statusButton}><i class='bx bxs-check-shield'></i> Checkout</button>`
-    navbar__cartCount.innerHTML = html;
-    
-    (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
-}
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
