@@ -147,6 +147,9 @@ body {
     width: 2.5rem;
     fill: var(--day-color-logo-txt_prices-btn_add);
 }
+.nav__logo-icon {
+    width: 100%;
+}
 
 .navbar__leftContent .textNav{
     display: flex;

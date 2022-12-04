@@ -226,6 +226,22 @@ function deletAllitem(idProd) {
     printNewStock(idProd)
 }
 
+function removeStock(des) {
+    if (des) {
+        shoppingCart.forEach((productShCrt) => {
+            for (let product of products) 
+                if (product.id === productShCrt.id) {
+                    product.shopCant = 0
+                    break
+                }
+            
+        })
+        shoppingCart.length = 0
+        printNumberIconNav(shoppingCart.length)
+        printEmptyCart()
+        countTotal()
+    }
+}
 //! VARIABLES ******************************************************************************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
@@ -339,23 +355,6 @@ navbar.addEventListener("click", (e) => {
     }
 
 })
-
-function removeStock(des) {
-    if (des) {
-        shoppingCart.forEach((productShCrt) => {
-            for (let product of products) 
-                if (product.id === productShCrt.id) {
-                    product.shopCant = 0
-                    break
-                }
-            
-        })
-        shoppingCart.length = 0
-        printNumberIconNav(shoppingCart.length)
-        printEmptyCart()
-        countTotal()
-    }
-}
 
 container.addEventListener("click", (e) => {
     idProduct = Number(e.target.id)
