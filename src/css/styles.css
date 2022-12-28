@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 :root {
-    --day-color-logo-txt_prices-btn_add: rgb(233, 73, 89);
-    --day-color-txt_homeTitle-icons_nav-FirstDarkShade: rgb(38, 38, 38);
-    --day-color-bg_btnAddHome-SecondDarkShade: rgb(43, 43, 43);
-    --day-color-txt_home_filter_stockCard-ThirdDarkShade: rgb(90, 90, 90);
-    --day-color-btn__discoverHome: rgb(189, 189, 189);
-    --day-color-bg_card_footer: rgb(230, 230, 230);
-    --day-color-bg_main: rgb(247, 247, 248);
+    --day-color-logo-txt_prices-btn_add: #e94959;
+    --day-color-txt_homeTitle-icons_nav-FirstDarkShade: #262626;
+    --day-color-bg_btnAddHome-SecondDarkShade: #2b2b2b;
+    --day-color-txt_home_filter_stockCard-ThirdDarkShade: #5a5a5a;
+    --day-color-btn__discoverHome: #bdbdbd;
+    --day-color-bg_card_footer: #e6e6e6;
+    --day-color-bg_main: #f7f7f8;
     --day-color-bg_nav-btn_txtAddHome: #fff;
-    --day-color-footerCopyright: rgb(140, 140, 140)
+    --day-color-footerCopyright: #8c8c8c;
     /* 
     --nigth-color-logo-txt_prices-btn_add: rgb(154,221,224);
     --nigth-color-txt_homeTitle-icons_nav-FirstDarkShade: rgb(242, 242, 242);
@@ -19,7 +19,20 @@
     --nigth-color-bg_card_footer: rgb(230, 230, 230);
     --nigth-color-bg_main: rgb(247, 247, 248);
     --nigth-color-bg_nav-bg_btnAddHome: rgb(27, 26, 35);
+    --day-color-footerCopyright: rgb(140, 140, 140)
      */
+}
+
+.darkmode {
+    --day-color-logo-txt_prices-btn_add: rgb(154,221,224);
+    --day-color-txt_homeTitle-icons_nav-FirstDarkShade: rgb(242, 242, 242);
+    --day-color-bg_btnAddHome-SecondDarkShade: rgb(242, 242, 242);
+    --day-color-txt_home_filter_stockCard-ThirdDarkShade: rgb(242, 242, 242);
+    --day-color-btn__discoverHome: rgb(189, 189, 189);
+    --day-color-bg_card_footer: #14141a;
+    --day-color-bg_main: #1f1d2a;
+    --day-color-bg_nav-btn_txtAddHome: #1f1d2a;
+    --day-color-footerCopyright: rgb(140, 140, 140);
 }
 
 
@@ -100,8 +113,13 @@ button {
     cursor: pointer;
 }
 
+.bx-moon,
 .bx-sun {
-    visibility: hidden;
+    transition: opacity 0.5s;
+    z-index: -1;
+}
+.hideIcon {
+    opacity: 0;
 }
 
 img {
@@ -166,6 +184,9 @@ body {
     gap: 0.8rem;
 
     font-size: 1.3rem;
+    color: #000;
+}
+.main__navbar .scroll-darkmode-rightcontent {
     color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
 }
 
@@ -178,12 +199,13 @@ body {
     height: 0.9rem;
     border-radius: 50%;
     background-color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 0.6rem;
-    color: #fff;
+    color: var(--day-color-bg_nav-btn_txtAddHome);
+    
 }
 
 .main__navbar .navbar__rightContent > a {
@@ -228,7 +250,8 @@ body {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--day-color-bg_card_footer);
+    color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
     height: 100vh;
     width: 100%;
 
@@ -332,8 +355,7 @@ body {
     width: 1.5rem;
     height: 1.5rem;
     border: 1px solid var(--day-color-bg_card_footer);
-    background-color: #fff;
-    color: var(--day-color-txt_home_filter_stockCard-ThirdDarkShade);
+    color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -544,6 +566,7 @@ body {
 
     position: relative;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    background-color: var(--day-color-bg_main);
     /* margin-top: 2rem; */
 }
 
@@ -563,6 +586,7 @@ body {
     width: 2.5rem;
     height: 2.5rem;
     background-color: var(--day-color-bg_nav-btn_txtAddHome);
+    color: var(--day-color-txt_homeTitle-icons_nav-FirstDarkShade);
     padding: 1rem;
     font-size: 1.3rem;
     box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);

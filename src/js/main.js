@@ -1,14 +1,14 @@
 
 {
-//* Agregar items al carrito (funTres)
+    //* Agregar items al carrito (funTres)
 
-// * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
+    // * Mostrar la cantidad de productos en carrito en la parte del icono del navbar (funCuataro)
 
-// * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
+    // * Eventos para el carrito: Hacer ahora que el boton + del carrito funcione (funFive)
 
-// * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
+    // * Eventos para el carrito: Hacer ahora que el boton - del carrito funcione y si llega a cero se quite del carrito (funSix)
 
-// * Eventos del carrito: Sumatoria de totales y colocar el boton de comprar con alerta
+    // * Eventos del carrito: Sumatoria de totales y colocar el boton de comprar con alerta
 }
 
 // *****************************************************************************************************
@@ -17,12 +17,19 @@ function actionRightMenus(condition, classEnter, currentHTML) {
     if (condition) return currentHTML.classList.toggle(classEnter)
 }
 
-function changeNavBg(){
-    container.getBoundingClientRect().top >= -40 ? 
-    navbar.classList.add("main__navbarTransparent") : navbar.classList.remove("main__navbarTransparent")
+function changeNavBg() {
+    if (container.getBoundingClientRect().top >= -40) {
+        navbar.classList.add("main__navbarTransparent")
+        if (bodyHTML.classList.contains('darkmode'))
+            navbar__rightContent.classList.remove('scroll-darkmode-rightcontent')
+    } else {
+        navbar.classList.remove("main__navbarTransparent")
+        if (bodyHTML.classList.contains('darkmode'))
+            navbar__rightContent.classList.add('scroll-darkmode-rightcontent')
+    }
 }
 
-function printEmptyCart(){
+function printEmptyCart() {
     html = `
         <img class="vacioImg" src="./src/img/empty-cart.png" alt="carritoVacío" style="width: 100%"> 
         <div class="content__products-empty__cardEmpty">
@@ -32,7 +39,7 @@ function printEmptyCart(){
                 button on the product page.
             </p> 
         </div>
-    `   
+    `
     cart__contentProducts.innerHTML = html
 }
 
@@ -42,10 +49,10 @@ function printNumberIconNav(length) {
 
 function reduceStock(idProd) { //! Checked
     console.log("entraPLUSSSSSSS")
-    const positionProduct =  products.findIndex(product => product.id === idProd)
+    const positionProduct = products.findIndex(product => product.id === idProd)
     if (products[positionProduct].stock > 0) {
         products[positionProduct].stock -= 1
-        products[positionProduct].shopCant += 1 
+        products[positionProduct].shopCant += 1
         printNewStock(idProd)
     }
 }
@@ -54,7 +61,7 @@ function printNewStock(idProd) {
     let html = ``
     container__stockProduct.forEach((stockSpan, index) => {
         html = `| Stock: ${products[stockSpan.id - 1].stock}`
-        if(Number(stockSpan.id) === idProd) 
+        if (Number(stockSpan.id) === idProd)
             container__stockProduct[index].textContent = html
     })
 }
@@ -64,38 +71,38 @@ function addToCart__Object(idProd) { //! checked
 
     let condition = false;
     for (let productShCrt of shoppingCart) {
-        if (productShCrt.id === idProd){
+        if (productShCrt.id === idProd) {
             condition = true
             break
         }
     }
-    if (!condition) 
+    if (!condition)
         for (let product of products) {
             if (product.id === idProd) {
                 console.log("hola")
-                shoppingCart.push({...product})
+                shoppingCart.push({ ...product })
                 console.log("shoppingCart")
                 break
             }
         } else {
-            const posProduct = shoppingCart.findIndex(productShCrt => productShCrt.id === idProd)
-            if (shoppingCart[posProduct].stock > 0) {
-                shoppingCart[posProduct].stock -= 1
-                shoppingCart[posProduct].shopCant += 1 
-            }
+        const posProduct = shoppingCart.findIndex(productShCrt => productShCrt.id === idProd)
+        if (shoppingCart[posProduct].stock > 0) {
+            shoppingCart[posProduct].stock -= 1
+            shoppingCart[posProduct].shopCant += 1
         }
+    }
 
 
 
-       /*  products.forEach(product => {
-            if (product.id === idProd) shoppingCart.push(product)
-            console.log(shoppingCart)
-        }) */
+    /*  products.forEach(product => {
+         if (product.id === idProd) shoppingCart.push(product)
+         console.log(shoppingCart)
+     }) */
 }
 
 function addToCart__Display() { //!checked
     html = ``
-    shoppingCart.forEach(({id, name, price, stock, src, alt, shopCant}) => {
+    shoppingCart.forEach(({ id, name, price, stock, src, alt, shopCant }) => {
         html += `
         <div class="withProducts__cardShopping">
             <img class="cardShopping__itemImg" src=${src} alt=${alt}>
@@ -118,14 +125,14 @@ function addToCart__Display() { //!checked
         `
     })
     cart__contentProducts.classList.add("content__products-withProducts")
-    cart__contentProducts.innerHTML = html 
-    
+    cart__contentProducts.innerHTML = html
+
 }
 
 function aumentStock(idProd) {
     console.log("En aumentStock inicos", shoppingCart[0].shopCant)
 
-    const positionProduct =  products.findIndex(product => product.id === idProd)
+    const positionProduct = products.findIndex(product => product.id === idProd)
     if (products[positionProduct].shopCant > 0) {
         products[positionProduct].stock += 1
         console.log(products === shoppingCart)
@@ -135,7 +142,7 @@ function aumentStock(idProd) {
         products[positionProduct].shopCant -= 1 //aca esta el problema
         console.log(shoppingCart[0].shopCant)
         printNewStock(idProd)
-    } 
+    }
     console.log("En aumentStock", shoppingCart[0].shopCant)
 }
 
@@ -143,23 +150,23 @@ function reduceInCart__Object(idProd) {
     console.log(shoppingCart)
     console.log(shoppingCart[0].shopCant)
     for (let i = 0; i < shoppingCart.length; i++) {
-        
+
         if (shoppingCart[i].id === idProd) {
-            
-                if (shoppingCart[i].shopCant > 1){
+
+            if (shoppingCart[i].shopCant > 1) {
                 shoppingCart[i].stock += 1
                 shoppingCart[i].shopCant -= 1
             } else {
                 shoppingCart.splice(i, 1)
             }
             break
-        } 
+        }
     }
 }
 function printProducts() {
     let html = ``
 
-    products.forEach(({id, name, price, stock, src, alt, filterName}) => {
+    products.forEach(({ id, name, price, stock, src, alt, filterName }) => {
         html += `
             <div class="mix products__card ${filterName}">
                 <div class="card__image">
@@ -177,7 +184,7 @@ function printProducts() {
 
 }
 
-function countTotal(){
+function countTotal() {
     let countPrice = 0;
     let countItems = 0;
     const strngButton = ' disabled="" '
@@ -185,10 +192,10 @@ function countTotal(){
         countPrice += (productShCrt.shopCant * productShCrt.price)
         countItems += productShCrt.shopCant
     }
-    
+
     if (!(countPrice === 0)) printCountTotal(countPrice, countItems, "")
     if ((countPrice === 0)) printCountTotal(countPrice, countItems, strngButton)
-    
+
 }
 function printCountTotal(price, item, statusButton) {
     html = `
@@ -198,21 +205,21 @@ function printCountTotal(price, item, statusButton) {
     </div>
     <button class="btn_basic btn-checked" ${statusButton}><i class='bx bxs-check-shield'></i> Checkout</button>`
     navbar__cartCount.innerHTML = html;
-    
+
     (price !== 0) ? statusButtonCheck = true : statusButtonCheck = false;
 }
 
 function deletAllitem(idProd) {
     // eliminar del objeto
-    for (let i = 0; i < shoppingCart.length; i++) 
+    for (let i = 0; i < shoppingCart.length; i++)
         if (shoppingCart[i].id === idProd) shoppingCart.splice(i, 1)
-    
+
     // aumentar todo el stock del objeto (products)
     for (let product of products) {
         if (product.id === idProd) {
             product.stock += product.shopCant
             product.shopCant = 0
-            console.log("aca" ,product);
+            console.log("aca", product);
             break
         }
     }
@@ -229,12 +236,12 @@ function deletAllitem(idProd) {
 function removeStock(des) {
     if (des) {
         shoppingCart.forEach((productShCrt) => {
-            for (let product of products) 
+            for (let product of products)
                 if (product.id === productShCrt.id) {
                     product.shopCant = 0
                     break
                 }
-            
+
         })
         shoppingCart.length = 0
         printNumberIconNav(shoppingCart.length)
@@ -242,15 +249,29 @@ function removeStock(des) {
         countTotal()
     }
 }
+
+function changeMoodIcons() {
+    moonIcon.classList.toggle('hideIcon')
+    sunIcon.classList.toggle('hideIcon')
+}
+
+function darkMode() {
+    bodyHTML.classList.toggle('darkmode')
+}
 //! VARIABLES ******************************************************************************************
 const navbar = document.querySelector(".main__navbar")
 const navbar__menu = document.querySelector(".navbar__menu")
+const navbar__rightContent = document.querySelector(".navbar__rightContent")
 const navbar__shoppingCart = document.querySelector(".navbar__cart")
 const navbar__iconShCrt = document.querySelector(".shoppingBagIcon__count")
 const navbar__cartCount = document.querySelector(".content__count")
 const cart__contentProducts = document.querySelector(".content__products")
 const container = document.querySelector(".main__container")
 const container__shopProducts = document.querySelector(".shop__products")
+const bodyHTML = document.querySelector('body')
+const moonIcon = document.querySelector('.bx-moon')
+const sunIcon = document.querySelector('.bx-sun')
+
 
 let menuActive = false
 let shoppingCartActive = false
@@ -311,15 +332,15 @@ window.addEventListener("load", (e) => {
 })
 
 navbar.addEventListener("click", (e) => {
-    if (e.target.classList.contains("bx-grid-alt")) 
-        menuActive = actionRightMenus(!menuActive , "navbar__menuShow", navbar__menu)
+    if (e.target.classList.contains("bx-grid-alt"))
+        menuActive = actionRightMenus(!menuActive, "navbar__menuShow", navbar__menu)
     if (e.target.classList.contains("hideMenu")) {
-        menuActive = actionRightMenus(menuActive , "navbar__menuShow", navbar__menu)
-        shoppingCartActive = actionRightMenus(shoppingCartActive , "navbar__cartShow", navbar__shoppingCart)
+        menuActive = actionRightMenus(menuActive, "navbar__menuShow", navbar__menu)
+        shoppingCartActive = actionRightMenus(shoppingCartActive, "navbar__cartShow", navbar__shoppingCart)
     }
 
     if (e.target.classList.contains("showCart") || e.target.classList.contains("shoppingBagIcon__count"))
-        shoppingCartActive = actionRightMenus(!shoppingCartActive , "navbar__cartShow", navbar__shoppingCart)
+        shoppingCartActive = actionRightMenus(!shoppingCartActive, "navbar__cartShow", navbar__shoppingCart)
 
     if (e.target.classList.contains("btn_basic-Plus")) {
         idProduct = Number(e.target.id)
@@ -343,15 +364,19 @@ navbar.addEventListener("click", (e) => {
         idProduct = Number(e.target.id)
         deletAllitem(idProduct)
         countTotal()
-        
     }
 
     if (e.target.classList.contains("btn-checked")) {
         const amountProductsToBuy = shoppingCart.length
         const singularConfirm = () => confirm(`¿Deseas comprar este producto?`)
         const pluralConfirm = () => confirm(`¿Deseas comprar estos ${amountProductsToBuy} productos?`)
-        const decision = (amountProductsToBuy > 1 ) ? pluralConfirm() : singularConfirm()
+        const decision = (amountProductsToBuy > 1) ? pluralConfirm() : singularConfirm()
         removeStock(decision)
+    }
+    console.log(e.target);
+    if (e.target.classList.contains("rightContent__moodPage")) {
+        changeMoodIcons()
+        darkMode()
     }
 
 })
@@ -365,7 +390,7 @@ container.addEventListener("click", (e) => {
         printNumberIconNav(shoppingCart.length)
         countTotal()
 
-    } 
+    }
 
 })
 
@@ -382,7 +407,7 @@ const container__stockProduct = document.querySelectorAll(".stockProduct")
 
 
 //! MIXITUP **********************************
-mixitup(".shop__products" , {
+mixitup(".shop__products", {
     selectors: {
         target: ".products__card"
     },
