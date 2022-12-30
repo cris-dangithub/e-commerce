@@ -55,6 +55,7 @@ body::-webkit-scrollbar-thumb { /* Para estilar el */
     padding: 0;
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 a {
